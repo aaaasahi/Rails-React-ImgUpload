@@ -5,30 +5,24 @@ export const UploadImages = () => {
   const [currentFile, setCurrentFile] = useState(undefined);
   const [previewImage, setPreviewImage] = useState(undefined);
   const [imageInfos, setImageInfos] = useState([]);
-  const [progress, setProgress] = useState(0);
 
   const selectFile = (event) => {
     setCurrentFile(event.target.files[0]);
     setPreviewImage(URL.createObjectURL(event.target.files[0]));
-    setProgress(0);
   };
 
   const upload = () => {
-    setProgress(0);
     setCurrentFile(currentFile);
 
-    UploadService.upload(currentFile, (event) => {
-      setProgress(Math.round((100 * event.loaded) / event.total));
+    UploadService.upload(currentFile, () => {
     })
       .then(() => {
         return UploadService.getFiles();
       })
       .then((files) => {
         setImageInfos(files.data);
-        console.log(files.data);
       })
       .catch(() => {
-        setProgress(0);
         setCurrentFile(undefined);
       });
   };
@@ -59,22 +53,7 @@ export const UploadImages = () => {
           </button>
         </div>
       </div>
-
-      {currentFile && (
-        <div className="progress my-3">
-          <div
-            className="progress-bar progress-bar-info progress-bar-striped"
-            role="progressbar"
-            aria-valuenow={progress}
-            aria-valuemin="0"
-            aria-valuemax="100"
-            style={{ width: progress + "%" }}
-          >
-            {progress}%
-          </div>
-        </div>
-      )}
-
+      
       {previewImage && (
         <div>
           <img className="preview" src={previewImage} alt="" />

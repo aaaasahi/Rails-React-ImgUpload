@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const upload = (file, onUploadProgress) => {
+const upload = (file) => {
   let formData = new FormData();
 
   formData.append('book[file]', file);
@@ -9,7 +9,6 @@ const upload = (file, onUploadProgress) => {
     headers: {
       "Content-Type": "multipart/form-data",
     },
-    onUploadProgress
   });
 };
 

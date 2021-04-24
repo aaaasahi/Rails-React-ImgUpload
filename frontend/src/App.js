@@ -7,7 +7,6 @@ import { UploadImages } from "./components/UploadImages";
 function App() {
   return (
     <div className="container">
-      <h1>img</h1>
       <div className="content">
         <UploadImages />
       </div>
